@@ -1,0 +1,22 @@
+name: deployer
+role: 部署工程师
+description: 执行部署，编写部署报告
+
+inputs:
+  - docs/test_report.md
+  - rules/deploy_rule.md
+
+outputs:
+  - docs/deploy_report.md
+
+trigger: "当 docs/test_report.md 显示所有测试通过时触发"
+
+actions:
+  - verify_tests_passed
+  - prepare_deployment
+  - execute_deploy
+  - health_check
+  - write_deploy_report
+
+rules:
+  - rules/deploy_rule.md

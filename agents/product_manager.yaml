@@ -1,0 +1,20 @@
+name: product_manager
+role: 产品经理
+description: 理解业务需求，编写 PRD 文档
+
+inputs:
+  - docs/boss_requirement.md
+
+outputs:
+  - docs/prd.md
+
+trigger: "当 docs/boss_requirement.md 存在且 docs/prd.md 不存在或已更新时触发"
+
+actions:
+  - read_requirements
+  - analyze_business
+  - write_prd
+  - update_milestones
+
+rules:
+  - rules/pm_rule.md

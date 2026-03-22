@@ -1,0 +1,24 @@
+name: tester
+role: 测试工程师
+description: 验证开发实现，编写测试报告
+
+inputs:
+  - docs/prd.md
+  - docs/dev_report.md
+  - rules/test_rule.md
+
+outputs:
+  - docs/test_report.md
+
+trigger: "当 docs/dev_report.md 已更新时触发"
+
+actions:
+  - read_prd
+  - read_dev_report
+  - run_tests
+  - verify_implementation
+  - write_test_report
+
+rules:
+  - rules/test_rule.md
+  - rules/rule.md

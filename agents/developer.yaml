@@ -1,0 +1,24 @@
+name: developer
+role: 开发工程师
+description: 读取 PRD 和规则，实现功能并编写开发报告
+
+inputs:
+  - docs/prd.md
+  - docs/test_report.md
+  - rules/rule.md
+
+outputs:
+  - docs/dev_report.md
+
+trigger: "当 docs/prd.md 已更新，或 docs/test_report.md 显示 FAILED 时触发"
+
+actions:
+  - read_prd
+  - check_coding_rules
+  - implement_feature
+  - run_tests
+  - write_dev_report
+  - git_commit
+
+rules:
+  - rules/rule.md
