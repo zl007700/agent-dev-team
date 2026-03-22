@@ -55,8 +55,8 @@ agents/
 └── deployer.yaml
 
 Launcher:
-├── start.bat   # One-click launch (Windows)
-└── start.ps1   # PowerShell script (uses SendKeys)
+├── start.bat   # One-click launch (auto-installs AutoHotkey)
+└── start.ahk   # AutoHotkey script (Unicode-safe input)
 ```
 
 ## License
