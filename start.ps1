@@ -37,24 +37,25 @@ Write-Host ""
 
 $shell = New-Object -ComObject WScript.Shell
 
-foreach ($agent in $agents) {
-    Write-Host "[*] Starting $($agent.Name)..." -ForegroundColor Yellow
+for ($i = 0; $i -lt $agents.Count; $i++) {
+    $agent = $agents[$i]
+    Write-Host "[$($i+1)] Starting $($agent.Name)..." -ForegroundColor Yellow
 
-    $psi = New-Object System.Diagnostics.ProcessStartInfo
-    $psi.FileName = "powershell.exe"
-    $psi.Arguments = "-NoExit -Command `"cd '$($agent.Dir)'; claude --dangerously-skip-permissions`""
-    $psi.UseShellExecute = $false
-    $psi.CreateNoWindow = $false
-    $psi.WindowStyle = "Normal"
+    # 使用 Start-Process 启动新的 PowerShell 窗口
+    $cmd = "cd '$($agent.Dir)'; claude --dangerously-skip-permissions"
+    Start-Process powershell -ArgumentList "-NoExit -Command $cmd" -WindowStyle Normal
 
-    $proc = [System.Diagnostics.Process]::Start($psi)
-
-    Write-Host "    Waiting for Claude to start..." -ForegroundColor Gray
+    Write-Host "    Waiting for Claude to start (~8s)..." -ForegroundColor Gray
     Start-Sleep -Seconds 8
 
     Write-Host "    Sending /loop command..." -ForegroundColor Gray
-    $shell.AppActivate($proc.Id)
+
+    # 激活最新打开的窗口
     Start-Sleep -Milliseconds 500
+
+    # 发送 /loop 命令
+    $shell.AppActivate($agent.Name) | Out-Null
+    Start-Sleep -Milliseconds 300
     $shell.SendKeys($agent.Loop.Trim())
     Start-Sleep -Milliseconds 300
     $shell.SendKeys("{ENTER}")
@@ -63,6 +64,6 @@ foreach ($agent in $agents) {
 }
 
 Write-Host ""
-Write-Host "Done! All 4 agents are running." -ForegroundColor Green
+Write-Host "Done! All 4 agents should be running." -ForegroundColor Green
 Write-Host ""
 Write-Host "Note: If any window missed input, manually paste /loop in that window." -ForegroundColor Gray
