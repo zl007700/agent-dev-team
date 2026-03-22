@@ -48,15 +48,20 @@ for ($i = 0; $i -lt $agents.Count; $i++) {
     Write-Host "    Waiting for Claude to start (~8s)..." -ForegroundColor Gray
     Start-Sleep -Seconds 8
 
-    Write-Host "    Sending /loop command..." -ForegroundColor Gray
+    Write-Host "    Pasting /loop command via clipboard..." -ForegroundColor Gray
 
-    # 激活最新打开的窗口
+    # 将指令复制到剪贴板（支持中文）
+    Set-Clipboard -Value $agent.Loop.Trim()
+
+    # 等待窗口激活
     Start-Sleep -Milliseconds 500
 
-    # 发送 /loop 命令
+    # 激活窗口
     $shell.AppActivate($agent.Name) | Out-Null
     Start-Sleep -Milliseconds 300
-    $shell.SendKeys($agent.Loop.Trim())
+
+    # Ctrl+V 粘贴
+    $shell.SendKeys("^v")
     Start-Sleep -Milliseconds 300
     $shell.SendKeys("{ENTER}")
 
