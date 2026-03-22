@@ -9,11 +9,11 @@ A document-driven multi-agent collaboration framework. Agents coordinate through
 git clone https://github.com/zl007700/agent-dev-team.git your-project
 cd your-project
 
-# 2. Edit your requirements
-vim docs/boss_requirement.md
+# 2. One-click launch all agents
+.\start.bat
 
-# 3. Start loop in Claude Code
-/loop 5m
+# 3. Edit your requirements
+vim docs/boss_requirement.md
 ```
 
 ## How It Works
@@ -53,6 +53,10 @@ agents/
 ├── developer.yaml
 ├── tester.yaml
 └── deployer.yaml
+
+Launcher:
+├── start.bat   # One-click launch (Windows)
+└── start.ps1   # PowerShell script (uses SendKeys)
 ```
 
 ## License
